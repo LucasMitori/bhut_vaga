@@ -47,7 +47,7 @@ yarn install
 yarn dev (para rodar o projeto local e poder efetuar os endpoints)
 ```
 
-## 📫 Contribuindo para Green_Acesso
+## 📫 Contribuindo para BHUT vaga
 <!---Se o seu README for longo ou se você tiver algum processo ou etapas específicas que deseja que os contribuidores sigam, considere a criação de um arquivo CONTRIBUTING.md separado--->
 Para contribuir com o projeto, siga estas etapas:
 
