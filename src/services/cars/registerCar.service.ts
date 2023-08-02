@@ -5,9 +5,8 @@ import {
 } from "../../interfaces/cars.interfaces";
 import mongoose from "mongoose";
 import nodemailer from "nodemailer";
+import { AppError } from "../../errors";
 require("dotenv").config();
-
-const MONGODB_URI = "mongodb://127.0.0.1:27017/bhut_db";
 
 const logSchema = new mongoose.Schema({
   id: String,
@@ -35,7 +34,7 @@ export const registerCarService = async (
     );
 
     if (!response.ok) {
-      throw new Error(`Failed to register car in the external API`);
+      throw new AppError(`Failed to register car in the external API`, 400);
     }
 
     const externalCarResponse: IExternalCarResponse = await response.json();
@@ -46,7 +45,7 @@ export const registerCarService = async (
       car_id: externalCarResponse._id,
     };
 
-    await mongoose.connect(MONGODB_URI, {
+    await mongoose.connect(process.env.MONGODB_URI, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
     });
@@ -63,7 +62,7 @@ export const registerCarService = async (
 
     const mailOptions = {
       from: process.env.EMAIL_USER,
-      to: "lucas.mitori@email.com",
+      to: "lucas.mitori@hotmail.com",
       subject: "Novo Carro Cadastrado",
       text: `Um novo carro foi cadastrado com as seguintes informações:\n${JSON.stringify(
         externalCarResponse
@@ -83,7 +82,6 @@ export const registerCarService = async (
 
     return registeredCar;
   } catch (error) {
-    console.error("Error registering car:", error);
-    throw error;
+    throw new AppError(`${error}`, 400);
   }
 };

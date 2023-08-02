@@ -29,8 +29,6 @@ export const listCarService = async (): Promise<ICarResponse[]> => {
       requestOptions
     );
 
-    console.log(response.ok);
-
     if (!response.ok) {
       throw new AppError(`Failed to fetch data from the external API`, 400);
     }

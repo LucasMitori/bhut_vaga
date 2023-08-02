@@ -13,6 +13,7 @@ logSchema.set("toJSON", {
     delete ret._id;
   },
 });
+
 let Log: mongoose.Model<any>;
 
 if (mongoose.models.Log) {

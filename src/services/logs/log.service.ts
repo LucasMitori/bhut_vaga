@@ -1,11 +1,11 @@
 import mongoose from "mongoose";
 import Log from "../../models/log.model";
-
-const MONGODB_URI = "mongodb://127.0.0.1:27017/bhut_db";
+import { AppError } from "../../errors";
+require("dotenv").config();
 
 export const getLogs = async () => {
   try {
-    await mongoose.connect(MONGODB_URI, {
+    await mongoose.connect(process.env.MONGODB_URI, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
     });
@@ -14,7 +14,6 @@ export const getLogs = async () => {
 
     return logs;
   } catch (error) {
-    console.error("Error getting logs:", error);
-    throw error;
+    throw new AppError(`Error getting logs: ${error}`, 404);
   }
 };
