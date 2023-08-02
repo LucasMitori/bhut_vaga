@@ -5,19 +5,14 @@ import { DataSource, DataSourceOptions } from "typeorm";
 
 const setDataSourceConfig = (): DataSourceOptions => {
   const entitiesPath: string = path.join(__dirname, "./entities/**.{js,ts}");
-  const migrationsPath: string = path.join(
-    __dirname,
-    "./migrations/**.{js,ts}"
-  );
 
   const nodeEnv = process.env.NODE_ENV;
 
   if (nodeEnv === "production") {
     return {
-      type: "postgres",
-      url: process.env.DATABASE_URL,
+      type: "mongodb",
+      url: process.env.MONGODB_URI,
       entities: [entitiesPath],
-      migrations: [migrationsPath],
     };
   }
 
@@ -31,16 +26,11 @@ const setDataSourceConfig = (): DataSourceOptions => {
   }
 
   return {
-    type: "postgres",
-    host: process.env.PGHOST,
-    username: process.env.PGUSER,
-    password: process.env.PGPASSWORD,
-    port: parseInt(process.env.PGPORT),
-    database: process.env.DB,
+    type: "mongodb",
+    url: process.env.MONGODB_URI,
+    entities: [entitiesPath],
     synchronize: false,
     logging: true,
-    entities: [entitiesPath],
-    migrations: [migrationsPath],
   };
 };
 
